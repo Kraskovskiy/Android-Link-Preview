@@ -521,8 +521,8 @@ public class Main extends ActionBarActivity {
             currentTitle = sourceContent.getTitle();
             currentDescription = sourceContent.getDescription();
             currentUrl = sourceContent.getUrl();
-            currentCannonicalUrl = sourceContent.getCannonicalUrl();
-          //  currentCannonicalUrl = sourceContent.get
+            //currentCannonicalUrl = sourceContent.getCannonicalUrl();
+            currentCannonicalUrl = sourceContent.getSiteName();
         }
     };
 

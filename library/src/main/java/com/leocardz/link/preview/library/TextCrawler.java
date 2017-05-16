@@ -377,22 +377,9 @@ public class TextCrawler {
 		return conn;
 	}
 
-	public Bitmap returnFavicon(String getURL) {
-		Connection con2 = Jsoup.connect(getURL);
-		Document doc = null;
+	private Bitmap returnFavicon(String getURL) {
 		try {
-			doc = con2.get();
-			Element e = doc.head().select("link[href~=.*\\.ico]").first();
-			String url = e.attr("href");
-			return getBitmapFromURL(new URL(url));
-		} catch (IOException e) {
-			return null;
-		}
-	}
-
-	private Bitmap getBitmapFromURL(URL src) {
-		try {
-			URL url = src;
+			URL url = new URL(getURL);
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setDoInput(true);
 			connection.connect();
