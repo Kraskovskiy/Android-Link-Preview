@@ -1,13 +1,18 @@
 package com.leocardz.link.preview.library;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -101,6 +106,7 @@ public class TextCrawler {
 						sourceContent.setMetaTags(metaTags);
 
 						sourceContent.setTitle(metaTags.get("title"));
+						sourceContent.setTitle(metaTags.get("siteName"));
 						sourceContent.setDescription(metaTags
 								.get("description"));
 
@@ -146,6 +152,8 @@ public class TextCrawler {
 					.getFinalUrl()));
 			sourceContent.setDescription(stripTags(sourceContent
 					.getDescription()));
+
+			sourceContent.setFavicon(returnFavicon(finalLinkSet[0]));
 
 			return null;
 		}
@@ -276,6 +284,7 @@ public class TextCrawler {
 		metaTags.put("title", "");
 		metaTags.put("description", "");
 		metaTags.put("image", "");
+		metaTags.put("siteName", "");
 
 		List<String> matches = Regex.pregMatchAll(content,
 				Regex.METATAG_PATTERN, 1);
@@ -304,6 +313,11 @@ public class TextCrawler {
 					|| lowerCase.contains("name=\"image\"")
 					|| lowerCase.contains("name='image'"))
 				updateMetaTag(metaTags, "image", separeMetaTagsContent(match));
+			else if (lowerCase.contains("property=\"og:site_name\"")
+					|| lowerCase.contains("property='og:site_name'")
+					|| lowerCase.contains("name=\"site_name\"")
+					|| lowerCase.contains("name='site_name'"))
+				updateMetaTag(metaTags, "siteName", separeMetaTagsContent(match));
 		}
 
 		return metaTags;
@@ -361,6 +375,34 @@ public class TextCrawler {
 			System.out.println("Can not connect to the URL");
 		}
 		return conn;
+	}
+
+	public Bitmap returnFavicon(String getURL) {
+		Connection con2 = Jsoup.connect(getURL);
+		Document doc = null;
+		try {
+			doc = con2.get();
+			Element e = doc.head().select("link[href~=.*\\.ico]").first();
+			String url = e.attr("href");
+			return getBitmapFromURL(new URL(url));
+		} catch (IOException e) {
+			return null;
+		}
+	}
+
+	private Bitmap getBitmapFromURL(URL src) {
+		try {
+			URL url = src;
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection.setDoInput(true);
+			connection.connect();
+			InputStream input = connection.getInputStream();
+			Bitmap myBitmap = BitmapFactory.decodeStream(input);
+			return myBitmap;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	/** Removes extra spaces and trim the string */

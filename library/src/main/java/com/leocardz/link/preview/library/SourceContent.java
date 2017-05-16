@@ -1,190 +1,211 @@
 package com.leocardz.link.preview.library;
 
+import android.graphics.Bitmap;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class SourceContent {
 
-	private boolean success = false;
-	private String htmlCode = "";
-	private String raw = "";
-	private String title = "";
-	private String description = "";
-	private String url = "";
-	private String finalUrl = "";
-	private String cannonicalUrl = "";
-	private HashMap<String, String> metaTags = new HashMap<String, String>();
+    private boolean success = false;
+    private String htmlCode = "";
+    private String raw = "";
+    private String siteName = "";
+    private String title = "";
+    private String description = "";
+    private String url = "";
+    private String finalUrl = "";
+    private String cannonicalUrl = "";
+    private Bitmap favicon = null;
+    private HashMap<String, String> metaTags = new HashMap<String, String>();
 
-	private List<String> images = new ArrayList<String>();
-	private String[] urlData = new String[2];
+    private List<String> images = new ArrayList<String>();
+    private String[] urlData = new String[2];
 
-	public SourceContent() {
-	}
+    public SourceContent() {
+    }
 
-	/**
-	 * @return the success
-	 */
-	public boolean isSuccess() {
-		return success;
-	}
+    /**
+     * @return the success
+     */
+    public boolean isSuccess() {
+        return success;
+    }
 
-	/**
-	 * @param success
-	 *            the success to set
-	 */
-	public void setSuccess(boolean success) {
-		this.success = success;
-	}
+    /**
+     * @param success the success to set
+     */
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
 
-	/**
-	 * @return the htmlCode
-	 */
-	public String getHtmlCode() {
-		return htmlCode;
-	}
+    /**
+     * @return the htmlCode
+     */
+    public String getHtmlCode() {
+        return htmlCode;
+    }
 
-	/**
-	 * @param htmlCode
-	 *            the htmlCode to set
-	 */
-	public void setHtmlCode(String htmlCode) {
-		this.htmlCode = htmlCode;
-	}
+    /**
+     * @param htmlCode the htmlCode to set
+     */
+    public void setHtmlCode(String htmlCode) {
+        this.htmlCode = htmlCode;
+    }
 
-	/**
-	 * @return the raw
-	 */
-	public String getRaw() {
-		return raw;
-	}
+    /**
+     * @return the raw
+     */
+    public String getRaw() {
+        return raw;
+    }
 
-	/**
-	 * @param raw
-	 *            the raw to set
-	 */
-	public void setRaw(String raw) {
-		this.raw = raw;
-	}
+    /**
+     * @param raw the raw to set
+     */
+    public void setRaw(String raw) {
+        this.raw = raw;
+    }
 
-	/**
-	 * @return the title
-	 */
-	public String getTitle() {
-		return title;
-	}
+    /**
+     * @return the site_name
+     */
+    public String getSiteName() {
+        return siteName;
+    }
 
-	/**
-	 * @param title
-	 *            the title to set
-	 */
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    /**
+     * @param siteName the SiteName to set
+     */
+    public void setSiteName(String siteName) {
+        this.siteName = siteName;
+    }
 
-	/**
-	 * @return the description
-	 */
-	public String getDescription() {
-		return description;
-	}
+    /**
+     * @return the title
+     */
+    public String getTitle() {
+        return title;
+    }
 
-	/**
-	 * @param description
-	 *            the description to set
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    /**
+     * @param title the title to set
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	/**
-	 * @return the url
-	 */
-	public String getUrl() {
-		return url;
-	}
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
 
-	/**
-	 * @param url
-	 *            the url to set
-	 */
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	/**
-	 * @return the finalUrl
-	 */
-	public String getFinalUrl() {
-		return finalUrl;
-	}
+    /**
+     * @return the url
+     */
+    public String getUrl() {
+        return url;
+    }
 
-	/**
-	 * @param finalUrl
-	 *            the finalUrl to set
-	 */
-	public void setFinalUrl(String finalUrl) {
-		this.finalUrl = finalUrl;
-	}
+    /**
+     * @param url the url to set
+     */
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-	/**
-	 * @return the cannonicalUrl
-	 */
-	public String getCannonicalUrl() {
-		return cannonicalUrl;
-	}
+    /**
+     * @return the finalUrl
+     */
+    public String getFinalUrl() {
+        return finalUrl;
+    }
 
-	/**
-	 * @param cannonicalUrl
-	 *            the cannonicalUrl to set
-	 */
-	public void setCannonicalUrl(String cannonicalUrl) {
-		this.cannonicalUrl = cannonicalUrl;
-	}
+    /**
+     * @param finalUrl the finalUrl to set
+     */
+    public void setFinalUrl(String finalUrl) {
+        this.finalUrl = finalUrl;
+    }
 
-	/**
-	 * @return the metaTags
-	 */
-	public HashMap<String, String> getMetaTags() {
-		return metaTags;
-	}
+    /**
+     * @return the cannonicalUrl
+     */
+    public String getCannonicalUrl() {
+        return cannonicalUrl;
+    }
 
-	/**
-	 * @param metaTags
-	 *            the metaTags to set
-	 */
-	public void setMetaTags(HashMap<String, String> metaTags) {
-		this.metaTags = metaTags;
-	}
+    /**
+     * @param cannonicalUrl the cannonicalUrl to set
+     */
+    public void setCannonicalUrl(String cannonicalUrl) {
+        this.cannonicalUrl = cannonicalUrl;
+    }
 
-	/**
-	 * @return the images
-	 */
-	public List<String> getImages() {
-		return images;
-	}
+    /**
+     * @return the favicon
+     */
+    public Bitmap getFavicon() {
+        return favicon;
+    }
 
-	/**
-	 * @param images
-	 *            the images to set
-	 */
-	public void setImages(List<String> images) {
-		this.images = images;
-	}
+    /**
+     * @param favicon the favicon to set
+     */
+    public void setFavicon(Bitmap favicon) {
+        this.favicon = favicon;
+    }
 
-	/**
-	 * @return the urlData
-	 */
-	public String[] getUrlData() {
-		return urlData;
-	}
+    /**
+     * @return the metaTags
+     */
+    public HashMap<String, String> getMetaTags() {
+        return metaTags;
+    }
 
-	/**
-	 * @param urlData
-	 *            the urlData to set
-	 */
-	public void setUrlData(String[] urlData) {
-		this.urlData = urlData;
-	}
+    /**
+     * @param metaTags the metaTags to set
+     */
+    public void setMetaTags(HashMap<String, String> metaTags) {
+        this.metaTags = metaTags;
+    }
+
+    /**
+     * @return the images
+     */
+    public List<String> getImages() {
+        return images;
+    }
+
+    /**
+     * @param images the images to set
+     */
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+
+    /**
+     * @return the urlData
+     */
+    public String[] getUrlData() {
+        return urlData;
+    }
+
+    /**
+     * @param urlData the urlData to set
+     */
+    public void setUrlData(String[] urlData) {
+        this.urlData = urlData;
+    }
 
 }
