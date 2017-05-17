@@ -153,8 +153,6 @@ public class TextCrawler {
 			sourceContent.setDescription(stripTags(sourceContent
 					.getDescription()));
 
-			sourceContent.setFavicon(returnFavicon(finalLinkSet[0]));
-
 			return null;
 		}
 
@@ -387,7 +385,6 @@ public class TextCrawler {
 			Bitmap myBitmap = BitmapFactory.decodeStream(input);
 			return myBitmap;
 		} catch (IOException e) {
-			e.printStackTrace();
 			return null;
 		}
 	}
