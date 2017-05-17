@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -521,8 +522,15 @@ public class Main extends ActionBarActivity {
             currentTitle = sourceContent.getTitle();
             currentDescription = sourceContent.getDescription();
             currentUrl = sourceContent.getUrl();
-            //currentCannonicalUrl = sourceContent.getCannonicalUrl();
-            currentCannonicalUrl = "getSiteName: "+sourceContent.getSiteName();
+            currentCannonicalUrl = sourceContent.getCannonicalUrl();
+           if (sourceContent.getFavicon()!=null) {
+               imageView.setImageBitmap(sourceContent.getFavicon());
+           }
+            Log.e("TAG", "onPos: nullll1 "+sourceContent.getUrl() );
+            Log.e("TAG", "onPos: nullll2 "+sourceContent.getCannonicalUrl() );
+            Log.e("TAG", "onPos: nullll3 "+sourceContent.getSiteName() );
+            Log.e("TAG", "onPos: nullll4 "+sourceContent.getUrlFavicon() );
+            Log.e("TAG", "onPos: nullll5 "+sourceContent.getHtmlCode() );
         }
     };
 

@@ -121,7 +121,11 @@ public class SourceContent {
      * @return the url favicon
      */
     public String getUrlFavicon() {
-        return url+"/favicon.ico";
+        if (url.toLowerCase().startsWith("https://")) {
+            return "https://" + cannonicalUrl + "/favicon.ico";
+        } else {
+            return "http://" + cannonicalUrl + "/favicon.ico";
+        }
     }
 
     /**
