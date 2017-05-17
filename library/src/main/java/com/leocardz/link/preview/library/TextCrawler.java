@@ -107,7 +107,7 @@ public class TextCrawler {
 						sourceContent.setMetaTags(metaTags);
 
 						sourceContent.setTitle(metaTags.get("title"));
-						sourceContent.setTitle(metaTags.get("siteName"));
+						sourceContent.setSiteName(metaTags.get("siteName"));
 						sourceContent.setDescription(metaTags
 								.get("description"));
 
