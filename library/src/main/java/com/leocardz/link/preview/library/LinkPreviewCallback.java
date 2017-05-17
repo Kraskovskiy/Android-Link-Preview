@@ -27,7 +27,9 @@ public interface LinkPreviewCallback {
 	 *            Indicates if the content is null.
 	 * @param holder
 	 *            holder.
+	 * @param messageID
+	 *            messageID.
 	 *
 	 */
-	void onPos(SourceContent sourceContent, RecyclerView.ViewHolder holder, boolean isNull);
+	void onPos(SourceContent sourceContent, RecyclerView.ViewHolder holder, String messageID, boolean isNull);
 }

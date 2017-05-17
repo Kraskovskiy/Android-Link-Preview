@@ -32,6 +32,7 @@ public class TextCrawler {
 
 	private LinkPreviewCallback callback;
 	private RecyclerView.ViewHolder mHolder;
+	private String messageID;
 
 	public TextCrawler() {
 	}
@@ -51,6 +52,14 @@ public class TextCrawler {
 							int imageQuantity) {
 		this.callback = callback;
 		mHolder = holder;
+		new GetCode(imageQuantity).execute(url);
+	}
+
+	public void makePreview(LinkPreviewCallback callback, RecyclerView.ViewHolder holder,String messageID, String url,
+							int imageQuantity) {
+		this.callback = callback;
+		mHolder = holder;
+		this.messageID = messageID;
 		new GetCode(imageQuantity).execute(url);
 	}
 
@@ -76,7 +85,7 @@ public class TextCrawler {
 		@Override
 		protected void onPostExecute(Void result) {
 			if (callback != null) {
-				callback.onPos(sourceContent, mHolder, isNull());
+				callback.onPos(sourceContent, mHolder, messageID, isNull());
 			}
 			super.onPostExecute(result);
 		}
