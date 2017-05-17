@@ -3,6 +3,7 @@ package com.leocardz.link.preview.library;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import org.jsoup.Connection;
@@ -30,6 +31,7 @@ public class TextCrawler {
 	private final String HTTPS_PROTOCOL = "https://";
 
 	private LinkPreviewCallback callback;
+	private RecyclerView.ViewHolder mHolder;
 
 	public TextCrawler() {
 	}
@@ -42,6 +44,13 @@ public class TextCrawler {
 	public void makePreview(LinkPreviewCallback callback, String url,
 							int imageQuantity) {
 		this.callback = callback;
+		new GetCode(imageQuantity).execute(url);
+	}
+
+	public void makePreview(LinkPreviewCallback callback, RecyclerView.ViewHolder holder, String url,
+							int imageQuantity) {
+		this.callback = callback;
+		mHolder = holder;
 		new GetCode(imageQuantity).execute(url);
 	}
 
@@ -67,7 +76,7 @@ public class TextCrawler {
 		@Override
 		protected void onPostExecute(Void result) {
 			if (callback != null) {
-				callback.onPos(sourceContent, isNull());
+				callback.onPos(sourceContent, mHolder, isNull());
 			}
 			super.onPostExecute(result);
 		}
