@@ -3,6 +3,7 @@ package com.leocardz.link.preview.library;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -152,6 +153,10 @@ public class TextCrawler {
 					.getFinalUrl()));
 			sourceContent.setDescription(stripTags(sourceContent
 					.getDescription()));
+
+			if (sourceContent.getUrl()!=null){
+				returnFavicon(sourceContent.getUrlFavicon());
+			}
 
 			return null;
 		}

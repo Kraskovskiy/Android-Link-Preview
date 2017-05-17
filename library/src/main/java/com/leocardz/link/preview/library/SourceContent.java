@@ -118,6 +118,13 @@ public class SourceContent {
     }
 
     /**
+     * @return the url favicon
+     */
+    public String getUrlFavicon() {
+        return url+"/favicon.ico";
+    }
+
+    /**
      * @param url the url to set
      */
     public void setUrl(String url) {
