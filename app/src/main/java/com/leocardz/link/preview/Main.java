@@ -524,6 +524,7 @@ public class Main extends ActionBarActivity {
             currentUrl = sourceContent.getUrl();
             currentCannonicalUrl = sourceContent.getCannonicalUrl();
            if (sourceContent.getFavicon()!=null) {
+               Log.e("TAG", "onPos: 56575 ");
                imageView.setImageBitmap(sourceContent.getFavicon());
            }
             Log.e("TAG", "onPos: nullll1 "+sourceContent.getUrl() );

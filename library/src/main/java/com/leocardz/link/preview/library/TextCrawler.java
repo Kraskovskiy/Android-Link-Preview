@@ -153,10 +153,10 @@ public class TextCrawler {
 					.getFinalUrl()));
 			sourceContent.setDescription(stripTags(sourceContent
 					.getDescription()));
-
+/*
 			if (sourceContent.getUrl()!=null){
 				returnFavicon(sourceContent.getUrlFavicon());
-			}
+			}*/
 
 			return null;
 		}
