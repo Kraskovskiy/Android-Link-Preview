@@ -527,13 +527,30 @@ public class Main extends ActionBarActivity {
                Log.e("TAG", "onPos:");
                imageView.setImageBitmap(sourceContent.getFavicon());
            }
+            sourceContent.setImages(fixUrlForImages(sourceContent.getUrl(), sourceContent.getImages()));
             Log.e("TAG", "onPos: nullll1 "+sourceContent.getUrl() );
+            Log.e("TAG", "onPos: nullll1 "+sourceContent.getImages().get(0));
             Log.e("TAG", "onPos: nullll2 "+sourceContent.getCannonicalUrl() );
             Log.e("TAG", "onPos: nullll3 "+sourceContent.getSiteName() );
             Log.e("TAG", "onPos: nullll4 "+sourceContent.getUrlFavicon() );
             Log.e("TAG", "onPos: nullll5 "+sourceContent.getHtmlCode() );
         }
     };
+
+    private List<String> fixUrlForImages(String url, List<String> images) {
+        StringBuffer sb = new StringBuffer();
+        String startUrl = "http:";
+        if (url.toLowerCase().startsWith("https://")) {
+            startUrl = "https:";
+        }
+        for (int i = 0; i < images.size(); i++) {
+            if (images.get(i).startsWith("//")) {
+                images.set(i, sb.append(startUrl).append(images.get(i)).toString());
+
+            }
+        }
+        return images;
+    }
 
     /**
      * Change the current image in image set

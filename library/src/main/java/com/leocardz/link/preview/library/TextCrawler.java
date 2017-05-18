@@ -152,8 +152,9 @@ public class TextCrawler {
 								sourceContent.getImages().add(
 										metaTags.get("image"));
 							else {
-								sourceContent.setImages(getImages(doc,
-										imageQuantity));
+								String[] finalLinkForImages = sourceContent.getFinalUrl().split("&");
+								sourceContent.setImages(fixUrlForImages(finalLinkForImages[0],getImages(doc,
+										imageQuantity)));
 							}
 						}
 
@@ -186,6 +187,21 @@ public class TextCrawler {
 				!isImage(sourceContent.getFinalUrl());
 		}
 
+	}
+
+	private List<String> fixUrlForImages(String url, List<String> images) {
+		StringBuffer sb = new StringBuffer();
+		String startUrl = "http:";
+		if (url.toLowerCase().startsWith(HTTPS_PROTOCOL)) {
+			startUrl = "https:";
+		}
+		for (int i = 0; i < images.size(); i++) {
+			if (images.get(i).startsWith("//")) {
+				images.set(i, sb.append(startUrl).append(images.get(i)).toString());
+
+			}
+		}
+		return images;
 	}
 
 	/** Gets content from a html tag */
