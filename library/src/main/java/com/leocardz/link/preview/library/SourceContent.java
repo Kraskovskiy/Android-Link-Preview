@@ -195,7 +195,7 @@ public class SourceContent {
      * @return the images
      */
     public List<String> getImages() {
-        return images;
+        return fixUrlForImages(images);
     }
 
     /**
@@ -219,4 +219,18 @@ public class SourceContent {
         this.urlData = urlData;
     }
 
+    private List<String> fixUrlForImages(List<String> images) {
+        StringBuilder sb = new StringBuilder();
+        String startUrl = "http:";
+        if (url.toLowerCase().startsWith("https:")) {
+            startUrl = "https:";
+        }
+        for (int i = 0; i < images.size(); i++) {
+            if (images.get(i).startsWith("//")) {
+                images.set(i, sb.append(startUrl).append(images.get(i)).toString());
+
+            }
+        }
+        return images;
+    }
 }
