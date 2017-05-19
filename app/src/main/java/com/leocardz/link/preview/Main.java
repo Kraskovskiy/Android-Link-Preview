@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -534,6 +535,11 @@ public class Main extends ActionBarActivity {
             Log.e("TAG", "onPos: nullll3 "+sourceContent.getSiteName() );
             Log.e("TAG", "onPos: nullll4 "+sourceContent.getUrlFavicon() );
             Log.e("TAG", "onPos: nullll5 "+sourceContent.getHtmlCode() );
+        }
+
+        @Override
+        public void onPos(SourceContent sourceContent, RecyclerView.ViewHolder viewHolder, String s, boolean b) {
+
         }
     };
 

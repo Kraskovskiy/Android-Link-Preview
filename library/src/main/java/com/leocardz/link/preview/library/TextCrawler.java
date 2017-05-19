@@ -402,6 +402,7 @@ public class TextCrawler {
 		try {
 			URL inputURL = new URL(strURL);
 			conn = inputURL.openConnection();
+			conn.setConnectTimeout(1000);
 		} catch (MalformedURLException e) {
 			return false;
 		} catch (IOException ioe) {
