@@ -121,7 +121,7 @@ public class SourceContent {
      * @return the url favicon
      */
     public String getUrlFavicon() {
-        if ((getImages().size() > 0 && getImages().get(0).toLowerCase().startsWith("https://")) || url.toLowerCase().startsWith("https://")) {
+        if (url.toLowerCase().startsWith("https://")) {
             return "https://" + cannonicalUrl + "/favicon.ico";
         } else {
             return "http://" + cannonicalUrl + "/favicon.ico";
@@ -222,7 +222,7 @@ public class SourceContent {
     private List<String> fixUrlForImages(List<String> images) {
         StringBuilder sb = new StringBuilder();
         String startUrl = "http:";
-        if ((getImages().size() > 0 && getImages().get(0).toLowerCase().startsWith("https://")) || url.toLowerCase().startsWith("https:")) {
+        if (url.toLowerCase().startsWith("https:")) {
             startUrl = "https:";
         }
         for (int i = 0; i < images.size(); i++) {
