@@ -19,11 +19,23 @@ public class SourceContent {
     private String cannonicalUrl = "";
     private Bitmap favicon = null;
     private HashMap<String, String> metaTags = new HashMap<String, String>();
+    private final String HTTP_PROTOCOL = "http://";
+    private final String HTTPS_PROTOCOL = "https://";
 
     private List<String> images = new ArrayList<String>();
     private String[] urlData = new String[2];
 
+    private String protocol = HTTP_PROTOCOL;
+
     public SourceContent() {
+    }
+
+    public String getProtocol() {
+        return protocol;
+    }
+
+    public void setProtocol(String protocol) {
+        this.protocol = protocol;
     }
 
     /**
@@ -121,10 +133,10 @@ public class SourceContent {
      * @return the url favicon
      */
     public String getUrlFavicon() {
-        if (url.toLowerCase().startsWith("https://")) {
-            return "https://" + cannonicalUrl + "/favicon.ico";
+        if (url.toLowerCase().startsWith(HTTPS_PROTOCOL)) {
+            return HTTPS_PROTOCOL + cannonicalUrl + "/favicon.ico";
         } else {
-            return "http://" + cannonicalUrl + "/favicon.ico";
+            return protocol + cannonicalUrl + "/favicon.ico";
         }
     }
 
@@ -222,13 +234,12 @@ public class SourceContent {
     private List<String> fixUrlForImages(List<String> images) {
         StringBuilder sb = new StringBuilder();
         String startUrl = "http:";
-        if (url.toLowerCase().startsWith("https:")) {
+        if (url.toLowerCase().startsWith(HTTPS_PROTOCOL)) {
             startUrl = "https:";
         }
         for (int i = 0; i < images.size(); i++) {
             if (images.get(i).startsWith("//")) {
                 images.set(i, sb.append(startUrl).append(images.get(i)).toString());
-
             }
         }
         return images;

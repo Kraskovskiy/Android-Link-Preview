@@ -156,6 +156,9 @@ public class TextCrawler {
 										imageQuantity));
 							}
 						}
+						if (!checkUrl(sourceContent.getUrlFavicon())) {
+							sourceContent.setProtocol(HTTPS_PROTOCOL);
+						}
 
 						sourceContent.setSuccess(true);
 					} catch (Exception e) {
@@ -392,6 +395,19 @@ public class TextCrawler {
 			System.out.println("Can not connect to the URL");
 		}
 		return conn;
+	}
+
+	private boolean checkUrl(String strURL) {
+		URLConnection conn = null;
+		try {
+			URL inputURL = new URL(strURL);
+			conn = inputURL.openConnection();
+		} catch (MalformedURLException e) {
+			return false;
+		} catch (IOException ioe) {
+			return false;
+		}
+		return true;
 	}
 
 	private Bitmap returnFavicon(String getURL) {
