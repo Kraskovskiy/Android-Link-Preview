@@ -156,7 +156,7 @@ public class TextCrawler {
 										imageQuantity));
 							}
 						}
-						if (!checkUrl(sourceContent.getUrlFavicon())) {
+						if (sourceContent.getImages().size()>0 && sourceContent.getImages().get(0).startsWith(HTTPS_PROTOCOL)) {
 							sourceContent.setProtocol(HTTPS_PROTOCOL);
 						}
 
@@ -395,20 +395,6 @@ public class TextCrawler {
 			System.out.println("Can not connect to the URL");
 		}
 		return conn;
-	}
-
-	private boolean checkUrl(String strURL) {
-		URLConnection conn = null;
-		try {
-			URL inputURL = new URL(strURL);
-			conn = inputURL.openConnection();
-			conn.setConnectTimeout(1000);
-		} catch (MalformedURLException e) {
-			return false;
-		} catch (IOException ioe) {
-			return false;
-		}
-		return true;
 	}
 
 	private Bitmap returnFavicon(String getURL) {

@@ -528,7 +528,7 @@ public class Main extends ActionBarActivity {
                Log.e("TAG", "onPos:");
                imageView.setImageBitmap(sourceContent.getFavicon());
            }
-            sourceContent.setImages(fixUrlForImages(sourceContent.getUrl(), sourceContent.getImages()));
+           // sourceContent.setImages(fixUrlForImages(sourceContent.getUrl(), sourceContent.getImages()));
             Log.e("TAG", "onPos: nullll1 "+sourceContent.getUrl() );
             Log.e("TAG", "onPos: nullll1 "+sourceContent.getImages().get(0));
             Log.e("TAG", "onPos: nullll2 "+sourceContent.getCannonicalUrl() );
