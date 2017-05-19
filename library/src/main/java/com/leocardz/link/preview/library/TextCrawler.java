@@ -156,9 +156,7 @@ public class TextCrawler {
 										imageQuantity));
 							}
 						}
-						if (sourceContent.getImages().size()>0 && sourceContent.getImages().get(0).startsWith(HTTPS_PROTOCOL)) {
-							sourceContent.setProtocol(HTTPS_PROTOCOL);
-						}
+
 
 						sourceContent.setSuccess(true);
 					} catch (Exception e) {
@@ -174,6 +172,10 @@ public class TextCrawler {
 					.getFinalUrl()));
 			sourceContent.setDescription(stripTags(sourceContent
 					.getDescription()));
+
+			if (sourceContent.getImages().size()>0 && sourceContent.getImages().get(0).startsWith(HTTPS_PROTOCOL)) {
+				sourceContent.setProtocol(HTTPS_PROTOCOL);
+			}
 
 			return null;
 		}
