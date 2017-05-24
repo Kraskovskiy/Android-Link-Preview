@@ -135,7 +135,7 @@ public class SourceContent {
     public String getUrlFavicon() {
         StringBuilder cannonicalUrlWithFix = new StringBuilder(cannonicalUrl);
         if (cannonicalUrlWithFix.toString().startsWith("m.")) {
-            cannonicalUrlWithFix.delete(0,1);
+            cannonicalUrlWithFix.delete(0,2);
         }
         if (url.toLowerCase().startsWith(HTTPS_PROTOCOL)) {
             return HTTPS_PROTOCOL + cannonicalUrlWithFix.toString() + "/favicon.ico";
