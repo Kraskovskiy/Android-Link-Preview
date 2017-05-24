@@ -133,10 +133,14 @@ public class SourceContent {
      * @return the url favicon
      */
     public String getUrlFavicon() {
+        StringBuilder cannonicalUrlWithFix = new StringBuilder(cannonicalUrl);
+        if (cannonicalUrlWithFix.toString().startsWith("m.")) {
+            cannonicalUrlWithFix.delete(0,1);
+        }
         if (url.toLowerCase().startsWith(HTTPS_PROTOCOL)) {
-            return HTTPS_PROTOCOL + cannonicalUrl + "/favicon.ico";
+            return HTTPS_PROTOCOL + cannonicalUrlWithFix.toString() + "/favicon.ico";
         } else {
-            return protocol + cannonicalUrl + "/favicon.ico";
+            return protocol + cannonicalUrlWithFix.toString() + "/favicon.ico";
         }
     }
 
@@ -234,12 +238,16 @@ public class SourceContent {
     private List<String> fixUrlForImages(List<String> images) {
         StringBuilder sb = new StringBuilder();
         String startUrl = "http:";
+        String startYoutube = "http://s.ytimg.com";
         if (url.toLowerCase().startsWith(HTTPS_PROTOCOL)) {
             startUrl = "https:";
         }
         for (int i = 0; i < images.size(); i++) {
             if (images.get(i).startsWith("//")) {
                 images.set(i, sb.append(startUrl).append(images.get(i)).toString());
+            }
+            if (images.get(i).startsWith("/yts/")) {
+                images.set(i, sb.append(startYoutube).append(images.get(i)).toString());
             }
         }
         return images;
