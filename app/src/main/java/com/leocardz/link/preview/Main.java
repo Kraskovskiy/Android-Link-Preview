@@ -642,7 +642,7 @@ public class Main extends ActionBarActivity {
      */
     private final String[] RANDOM_URLS = {
             "http://vnexpress.net/ ",
-            "http://facebook.com/ ",
+/*            "http://facebook.com/ ",
             "http://gmail.com",
             "http://goo.gl/jKCPgp",
             "http://www3.nhk.or.jp/",
@@ -650,8 +650,8 @@ public class Main extends ActionBarActivity {
             "http://www.youtube.com/watch?v=cv2mjAgFTaI",
             "http://vimeo.com/67992157",
             "https://lh6.googleusercontent.com/-aDALitrkRFw/UfQEmWPMQnI/AAAAAAAFOlQ/mDh1l4ej15k/w337-h697-no/db1969caa4ecb88ef727dbad05d5b5b3.jpg",
-            "http://www.nasa.gov/", "http://twitter.com",
-            "http://bit.ly/14SD1eR"};
+            "http://www.nasa.gov/", "http://twitter.com",*/
+            "http://а-бис.рф"};
 
     /**
      * Returns a random url
