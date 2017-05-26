@@ -18,6 +18,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -114,7 +115,7 @@ public class TextCrawler {
 				} else {
 					try {
 						Document doc = Jsoup
-								.connect(sourceContent.getFinalUrl())
+								.connect(URLEncoder.encode(sourceContent.getFinalUrl(), "UTF-8") )
 								.userAgent("Mozilla").get();
 
 						sourceContent.setHtmlCode(extendedTrim(doc.toString()));

@@ -280,6 +280,266 @@ public class Main extends ActionBarActivity {
         @Override
         public void onPos(final SourceContent sourceContent, boolean isNull) {
 
+        /*    *//** Removing the loading layout *//*
+            linearLayout.removeAllViews();
+
+            if (isNull || sourceContent.getFinalUrl().equals("")) {
+                *//**
+                 * Inflating the content layout into Main View LinearLayout
+                 *//*
+                View failed = getLayoutInflater().inflate(R.layout.failed,
+                        linearLayout);
+
+                TextView titleTextView = (TextView) failed
+                        .findViewById(R.id.text);
+                titleTextView.setText(getString(R.string.failed_preview) + "\n"
+                        + sourceContent.getFinalUrl());
+
+                failed.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View arg0) {
+                        releasePreviewArea();
+                    }
+                });
+
+            } else {
+                postButton.setVisibility(View.VISIBLE);
+
+                currentImageSet = new Bitmap[sourceContent.getImages().size()];
+
+                *//**
+                 * Inflating the content layout into Main View LinearLayout
+                 *//*
+                final View content = getLayoutInflater().inflate(
+                        R.layout.preview_content, linearLayout);
+
+                *//** Fullfilling the content layout *//*
+                final LinearLayout infoWrap = (LinearLayout) content
+                        .findViewById(R.id.info_wrap);
+                final LinearLayout titleWrap = (LinearLayout) infoWrap
+                        .findViewById(R.id.title_wrap);
+                final LinearLayout thumbnailOptions = (LinearLayout) content
+                        .findViewById(R.id.thumbnail_options);
+                final LinearLayout noThumbnailOptions = (LinearLayout) content
+                        .findViewById(R.id.no_thumbnail_options);
+
+                final ImageView imageSet = (ImageView) content
+                        .findViewById(R.id.image_post_set);
+
+                final TextView close = (TextView) titleWrap
+                        .findViewById(R.id.close);
+                final TextView titleTextView = (TextView) titleWrap
+                        .findViewById(R.id.title);
+                final EditText titleEditText = (EditText) titleWrap
+                        .findViewById(R.id.input_title);
+                final TextView urlTextView = (TextView) content
+                        .findViewById(R.id.url);
+                final TextView descriptionTextView = (TextView) content
+                        .findViewById(R.id.description);
+                final EditText descriptionEditText = (EditText) content
+                        .findViewById(R.id.input_description);
+                final TextView countTextView = (TextView) thumbnailOptions
+                        .findViewById(R.id.count);
+                final CheckBox noThumbCheckBox = (CheckBox) noThumbnailOptions
+                        .findViewById(R.id.no_thumbnail_checkbox);
+                final Button previousButton = (Button) thumbnailOptions
+                        .findViewById(R.id.post_previous);
+                final Button forwardButton = (Button) thumbnailOptions
+                        .findViewById(R.id.post_forward);
+
+                editTextTitlePost = titleEditText;
+                editTextDescriptionPost = descriptionEditText;
+
+                titleTextView.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View arg0) {
+                        titleTextView.setVisibility(View.GONE);
+
+                        titleEditText.setText(TextCrawler
+                                .extendedTrim(titleTextView.getText()
+                                        .toString()));
+                        titleEditText.setVisibility(View.VISIBLE);
+                    }
+                });
+                titleEditText
+                        .setOnEditorActionListener(new OnEditorActionListener() {
+
+                            @Override
+                            public boolean onEditorAction(TextView arg0,
+                                                          int arg1, KeyEvent arg2) {
+
+                                if (arg2.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                                    titleEditText.setVisibility(View.GONE);
+
+                                    currentTitle = TextCrawler
+                                            .extendedTrim(titleEditText
+                                                    .getText().toString());
+
+                                    titleTextView.setText(currentTitle);
+                                    titleTextView.setVisibility(View.VISIBLE);
+
+                                    hideSoftKeyboard();
+                                }
+
+                                return false;
+                            }
+                        });
+                descriptionTextView.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View arg0) {
+                        descriptionTextView.setVisibility(View.GONE);
+
+                        descriptionEditText.setText(TextCrawler
+                                .extendedTrim(descriptionTextView.getText()
+                                        .toString()));
+                        descriptionEditText.setVisibility(View.VISIBLE);
+                    }
+                });
+                descriptionEditText
+                        .setOnEditorActionListener(new OnEditorActionListener() {
+
+                            @Override
+                            public boolean onEditorAction(TextView arg0,
+                                                          int arg1, KeyEvent arg2) {
+
+                                if (arg2.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                                    descriptionEditText
+                                            .setVisibility(View.GONE);
+
+                                    currentDescription = TextCrawler
+                                            .extendedTrim(descriptionEditText
+                                                    .getText().toString());
+
+                                    descriptionTextView
+                                            .setText(currentDescription);
+                                    descriptionTextView
+                                            .setVisibility(View.VISIBLE);
+
+                                    hideSoftKeyboard();
+                                }
+
+                                return false;
+                            }
+                        });
+
+                close.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View arg0) {
+                        releasePreviewArea();
+                    }
+                });
+
+                noThumbCheckBox
+                        .setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+                            @Override
+                            public void onCheckedChanged(CompoundButton arg0,
+                                                         boolean arg1) {
+                                noThumb = arg1;
+
+                                if (sourceContent.getImages().size() > 1)
+                                    if (noThumb)
+                                        thumbnailOptions
+                                                .setVisibility(View.GONE);
+                                    else
+                                        thumbnailOptions
+                                                .setVisibility(View.VISIBLE);
+
+                                showHideImage(imageSet, infoWrap, !noThumb);
+                            }
+                        });
+
+                previousButton.setEnabled(false);
+                previousButton.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View arg0) {
+                        if (currentItem > 0)
+                            changeImage(previousButton, forwardButton,
+                                    currentItem - 1, sourceContent,
+                                    countTextView, imageSet, sourceContent
+                                            .getImages().get(currentItem - 1),
+                                    currentItem);
+                    }
+                });
+                forwardButton.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View arg0) {
+                        if (currentItem < sourceContent.getImages().size() - 1)
+                            changeImage(previousButton, forwardButton,
+                                    currentItem + 1, sourceContent,
+                                    countTextView, imageSet, sourceContent
+                                            .getImages().get(currentItem + 1),
+                                    currentItem);
+                    }
+                });
+
+                if (sourceContent.getImages().size() > 0) {
+
+                    if (sourceContent.getImages().size() > 1) {
+                        countTextView.setText("1 " + getString(R.string.of)
+                                + " " + sourceContent.getImages().size());
+
+                        thumbnailOptions.setVisibility(View.VISIBLE);
+                    }
+                    noThumbnailOptions.setVisibility(View.VISIBLE);
+
+                    UrlImageViewHelper.setUrlDrawable(imageSet, sourceContent
+                            .getImages().get(0), new UrlImageViewCallback() {
+
+                        @Override
+                        public void onLoaded(ImageView imageView,
+                                             Bitmap loadedBitmap, String url,
+                                             boolean loadedFromCache) {
+                            if (loadedBitmap != null) {
+                                currentImage = loadedBitmap;
+                                currentImageSet[0] = loadedBitmap;
+                            }
+                        }
+                    });
+
+                } else {
+                    showHideImage(imageSet, infoWrap, false);
+                }
+
+                if (sourceContent.getTitle().equals(""))
+                    sourceContent.setTitle(getString(R.string.enter_title));
+                if (sourceContent.getDescription().equals(""))
+                    sourceContent
+                            .setDescription(getString(R.string.enter_description));
+
+                titleTextView.setText(sourceContent.getTitle());
+                urlTextView.setText(sourceContent.getCannonicalUrl());
+                descriptionTextView.setText(sourceContent.getDescription());
+
+                postButton.setVisibility(View.VISIBLE);
+            }
+
+            currentTitle = sourceContent.getTitle();
+            currentDescription = sourceContent.getDescription();
+            currentUrl = sourceContent.getUrl();
+            currentCannonicalUrl = sourceContent.getCannonicalUrl();
+           if (sourceContent.getFavicon()!=null) {
+               Log.e("TAG", "onPos:");
+               imageView.setImageBitmap(sourceContent.getFavicon());
+           }
+           // sourceContent.setImages(fixUrlForImages(sourceContent.getUrl(), sourceContent.getImages()));
+            Log.e("TAG", "onPos: nullll1 "+sourceContent.getUrl() );
+            Log.e("TAG", "onPos: nullll1 "+sourceContent.getImages().get(0));
+            Log.e("TAG", "onPos: nullll2 "+sourceContent.getCannonicalUrl() );
+            Log.e("TAG", "onPos: nullll3 "+sourceContent.getSiteName() );
+            Log.e("TAG", "onPos: nullll4 "+sourceContent.getUrlFavicon() );
+            Log.e("TAG", "onPos: nullll5 "+sourceContent.getHtmlCode() );*/
+        }
+
+        @Override
+        public void onPos(final SourceContent sourceContent, RecyclerView.ViewHolder viewHolder, String s, boolean isNull) {
+
             /** Removing the loading layout */
             linearLayout.removeAllViews();
 
@@ -524,22 +784,21 @@ public class Main extends ActionBarActivity {
             currentDescription = sourceContent.getDescription();
             currentUrl = sourceContent.getUrl();
             currentCannonicalUrl = sourceContent.getCannonicalUrl();
-           if (sourceContent.getFavicon()!=null) {
-               Log.e("TAG", "onPos:");
-               imageView.setImageBitmap(sourceContent.getFavicon());
-           }
-           // sourceContent.setImages(fixUrlForImages(sourceContent.getUrl(), sourceContent.getImages()));
+          /*  if (sourceContent.getFavicon()!=null) {
+                Log.e("TAG", "onPos:");
+                imageView.setImageBitmap(sourceContent.getFavicon());
+            }*/
+            // sourceContent.setImages(fixUrlForImages(sourceContent.getUrl(), sourceContent.getImages()));
             Log.e("TAG", "onPos: nullll1 "+sourceContent.getUrl() );
-            Log.e("TAG", "onPos: nullll1 "+sourceContent.getImages().get(0));
+            Log.e("TAG", "onPos: nullll1.01 "+sourceContent.getFinalUrl() );
+            if (sourceContent.getImages().size()>0) {
+                 Log.e("TAG", "onPos: nullll1.5 "+sourceContent.getImages().get(0));
+            }
             Log.e("TAG", "onPos: nullll2 "+sourceContent.getCannonicalUrl() );
             Log.e("TAG", "onPos: nullll3 "+sourceContent.getSiteName() );
             Log.e("TAG", "onPos: nullll4 "+sourceContent.getUrlFavicon() );
             Log.e("TAG", "onPos: nullll5 "+sourceContent.getHtmlCode() );
-        }
-
-        @Override
-        public void onPos(SourceContent sourceContent, RecyclerView.ViewHolder viewHolder, String s, boolean b) {
-
+            Log.e("TAG", "onPos: nullll6 "+sourceContent.getRaw());
         }
     };
 
