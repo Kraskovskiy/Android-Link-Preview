@@ -15,10 +15,10 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.IDN;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -114,9 +114,16 @@ public class TextCrawler {
 
 				} else {
 					try {
-						Document doc = Jsoup
-								.connect(URLEncoder.encode(sourceContent.getFinalUrl(), "UTF-8") )
-								.userAgent("Mozilla").get();
+						Document doc;
+						if (sourceContent.getFinalUrl()!=null && !sourceContent.getFinalUrl().toLowerCase().endsWith(".рф")) {
+							doc = Jsoup
+									.connect(sourceContent.getFinalUrl())
+									.userAgent("Mozilla").get();
+						} else {
+							doc = Jsoup
+									.connect(returnPrefix(sourceContent.getFinalUrl())+ IDN.toASCII(cannonicalPage(sourceContent.getFinalUrl())))
+									.userAgent("Mozilla").get();
+						}
 
 						sourceContent.setHtmlCode(extendedTrim(doc.toString()));
 
@@ -285,6 +292,13 @@ public class TextCrawler {
 
 		return cannonical;
 
+	}
+
+	private String returnPrefix(String url) {
+		if (url.startsWith(HTTPS_PROTOCOL)) {
+			return HTTPS_PROTOCOL;
+		}
+		return HTTP_PROTOCOL;
 	}
 
 	/** Strips the tags from an element */

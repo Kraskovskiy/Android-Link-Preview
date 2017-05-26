@@ -31,6 +31,13 @@ import com.leocardz.link.preview.library.LinkPreviewCallback;
 import com.leocardz.link.preview.library.SourceContent;
 import com.leocardz.link.preview.library.TextCrawler;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+import java.io.IOException;
+import java.net.IDN;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Random;
 
@@ -789,6 +796,26 @@ public class Main extends ActionBarActivity {
                 imageView.setImageBitmap(sourceContent.getFavicon());
             }*/
             // sourceContent.setImages(fixUrlForImages(sourceContent.getUrl(), sourceContent.getImages()));
+
+
+            new Thread(new Runnable() {
+                public void run() {
+                    try {
+
+                        Document  doc = Jsoup
+                                .connect("http://"+IDN.toASCII(sourceContent.getCannonicalUrl()))
+                                .userAgent("Mozilla").get();
+                       // Document doc = Jsoup.parse(new URL(URLEncoder.encode(sourceContent.getFinalUrl(), "UTF-8")).openStream(), "UTF-8", sourceContent.getFinalUrl());
+                        if (doc!=null) {
+                            Log.e("TAG", "onPos: nullll6 " + doc.toString());
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
+
             Log.e("TAG", "onPos: nullll1 "+sourceContent.getUrl() );
             Log.e("TAG", "onPos: nullll1.01 "+sourceContent.getFinalUrl() );
             if (sourceContent.getImages().size()>0) {
@@ -798,7 +825,7 @@ public class Main extends ActionBarActivity {
             Log.e("TAG", "onPos: nullll3 "+sourceContent.getSiteName() );
             Log.e("TAG", "onPos: nullll4 "+sourceContent.getUrlFavicon() );
             Log.e("TAG", "onPos: nullll5 "+sourceContent.getHtmlCode() );
-            Log.e("TAG", "onPos: nullll6 "+sourceContent.getRaw());
+
         }
     };
 
