@@ -3,10 +3,9 @@ package com.leocardz.link.preview.library;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
-import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -115,7 +114,7 @@ public class TextCrawler {
 				} else {
 					try {
 						Document doc;
-						if (sourceContent.getFinalUrl()!=null && !sourceContent.getFinalUrl().toLowerCase().endsWith(".рф")) {
+						if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) || (!sourceContent.getFinalUrl().toLowerCase().endsWith(".рф"))) {
 							doc = Jsoup
 									.connect(sourceContent.getFinalUrl())
 									.userAgent("Mozilla").get();

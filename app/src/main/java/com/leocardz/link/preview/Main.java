@@ -928,6 +928,7 @@ public class Main extends ActionBarActivity {
      */
     private final String[] RANDOM_URLS = {
             "http://vnexpress.net/ ",
+            "http://мойвелосипед.рф/",
 /*            "http://facebook.com/ ",
             "http://gmail.com",
             "http://goo.gl/jKCPgp",
