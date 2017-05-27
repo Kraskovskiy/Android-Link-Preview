@@ -1,7 +1,9 @@
 package com.leocardz.link.preview.library;
 
 import android.graphics.Bitmap;
+import android.os.Build;
 
+import java.net.IDN;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -135,7 +137,10 @@ public class SourceContent {
     public String getUrlFavicon() {
         StringBuilder cannonicalUrlWithFix = new StringBuilder(cannonicalUrl);
         if (cannonicalUrlWithFix.toString().startsWith("m.")) {
-            cannonicalUrlWithFix.delete(0,2);
+            cannonicalUrlWithFix.delete(0, 2);
+        }
+        if ((Build.VERSION.SDK_INT < Build.VERSION_CODES.M) && (cannonicalUrlWithFix.toString().toLowerCase().endsWith(".рф"))) {
+            cannonicalUrlWithFix.replace(0, cannonicalUrlWithFix.length(), IDN.toASCII(cannonicalUrlWithFix.toString()));
         }
         if (url.toLowerCase().startsWith(HTTPS_PROTOCOL)) {
             return HTTPS_PROTOCOL + cannonicalUrlWithFix.toString() + "/favicon.ico";
