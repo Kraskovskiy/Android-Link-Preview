@@ -114,7 +114,7 @@ public class TextCrawler {
 				} else {
 					try {
 						Document doc;
-						if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) || (!sourceContent.getFinalUrl().toLowerCase().endsWith(".рф"))) {
+						if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.M) || (!sourceContent.getFinalUrl().toLowerCase().endsWith(".рф"))) {
 							doc = Jsoup
 									.connect(sourceContent.getFinalUrl())
 									.userAgent("Mozilla").get();

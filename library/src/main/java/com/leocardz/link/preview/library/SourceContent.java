@@ -139,7 +139,7 @@ public class SourceContent {
         if (cannonicalUrlWithFix.toString().startsWith("m.")) {
             cannonicalUrlWithFix.delete(0, 2);
         }
-        if ((Build.VERSION.SDK_INT < Build.VERSION_CODES.M) && (cannonicalUrlWithFix.toString().toLowerCase().endsWith(".рф"))) {
+        if ((Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) && (cannonicalUrlWithFix.toString().toLowerCase().endsWith(".рф"))) {
             cannonicalUrlWithFix.replace(0, cannonicalUrlWithFix.length(), IDN.toASCII(cannonicalUrlWithFix.toString()));
         }
         if (url.toLowerCase().startsWith(HTTPS_PROTOCOL)) {
