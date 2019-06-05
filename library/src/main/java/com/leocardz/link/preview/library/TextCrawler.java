@@ -26,6 +26,7 @@ public class TextCrawler {
 
 	public static final int ALL = -1;
 	public static final int NONE = -2;
+	public static final int TIMEOUT = 7000;
 
 	private final String HTTP_PROTOCOL = "http://";
 	private final String HTTPS_PROTOCOL = "https://";
@@ -39,20 +40,20 @@ public class TextCrawler {
 
 	public void makePreview(LinkPreviewCallback callback, String url) {
 		this.callback = callback;
-		new GetCode(ALL).execute(url);
+		new GetCode(ALL).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
 	}
 
 	public void makePreview(LinkPreviewCallback callback, String url,
 							int imageQuantity) {
 		this.callback = callback;
-		new GetCode(imageQuantity).execute(url);
+		new GetCode(imageQuantity).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
 	}
 
 	public void makePreview(LinkPreviewCallback callback, RecyclerView.ViewHolder holder, String url,
 							int imageQuantity) {
 		this.callback = callback;
 		mHolder = holder;
-		new GetCode(imageQuantity).execute(url);
+		new GetCode(imageQuantity).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
 	}
 
 	public void makePreview(LinkPreviewCallback callback, RecyclerView.ViewHolder holder,String messageID, String url,
@@ -60,7 +61,7 @@ public class TextCrawler {
 		this.callback = callback;
 		mHolder = holder;
 		this.messageID = messageID;
-		new GetCode(imageQuantity).execute(url);
+		new GetCode(imageQuantity).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
 	}
 
 	/** Get html code */
@@ -117,10 +118,12 @@ public class TextCrawler {
 						if ((Build.VERSION.SDK_INT > Build.VERSION_CODES.M) || (!sourceContent.getFinalUrl().toLowerCase().endsWith(".рф"))) {
 							doc = Jsoup
 									.connect(sourceContent.getFinalUrl())
+									.timeout(TIMEOUT)
 									.userAgent("Mozilla").get();
 						} else {
 							doc = Jsoup
 									.connect(returnPrefix(sourceContent.getFinalUrl())+ IDN.toASCII(cannonicalPage(sourceContent.getFinalUrl())))
+									.timeout(TIMEOUT)
 									.userAgent("Mozilla").get();
 						}
 
