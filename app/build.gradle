@@ -28,6 +28,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.koushikdutta.urlimageviewhelper:urlimageviewhelper:1.0.4'
     compile 'org.jsoup:jsoup:1.11.3'
-    compile 'com.github.Kraskovskiy:Android-Link-Preview:08878901e4@aar'
+    compile project(":library")
     compile 'com.android.support:recyclerview-v7:25.3.1'
 }
