@@ -58,12 +58,12 @@ public class TextCrawler {
 		new GetCode(imageQuantity).executeOnExecutor(executor, url);
 	}
 
-	public void makePreview(LinkPreviewCallback callback, RecyclerView.ViewHolder holder,String messageID, String url,
+	public AsyncTask makePreview(LinkPreviewCallback callback, RecyclerView.ViewHolder holder,String messageID, String url,
 							int imageQuantity) {
 		this.callback = callback;
 		mHolder = holder;
 		this.messageID = messageID;
-		new GetCode(imageQuantity).executeOnExecutor(executor, url);
+		return new GetCode(imageQuantity).executeOnExecutor(executor, url);
 	}
 
 	/** Get html code */
