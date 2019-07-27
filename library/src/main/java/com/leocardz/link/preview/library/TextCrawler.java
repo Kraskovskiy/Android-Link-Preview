@@ -21,12 +21,14 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.Executor;
 
 public class TextCrawler {
 
 	public static final int ALL = -1;
 	public static final int NONE = -2;
 	public static final int TIMEOUT = 7000;
+	public static final Executor executor = AsyncTask.SERIAL_EXECUTOR;
 
 	private final String HTTP_PROTOCOL = "http://";
 	private final String HTTPS_PROTOCOL = "https://";
@@ -40,20 +42,20 @@ public class TextCrawler {
 
 	public void makePreview(LinkPreviewCallback callback, String url) {
 		this.callback = callback;
-		new GetCode(ALL).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
+		new GetCode(ALL).executeOnExecutor(executor, url);
 	}
 
 	public void makePreview(LinkPreviewCallback callback, String url,
 							int imageQuantity) {
 		this.callback = callback;
-		new GetCode(imageQuantity).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
+		new GetCode(imageQuantity).executeOnExecutor(executor, url);
 	}
 
 	public void makePreview(LinkPreviewCallback callback, RecyclerView.ViewHolder holder, String url,
 							int imageQuantity) {
 		this.callback = callback;
 		mHolder = holder;
-		new GetCode(imageQuantity).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
+		new GetCode(imageQuantity).executeOnExecutor(executor, url);
 	}
 
 	public void makePreview(LinkPreviewCallback callback, RecyclerView.ViewHolder holder,String messageID, String url,
@@ -61,7 +63,7 @@ public class TextCrawler {
 		this.callback = callback;
 		mHolder = holder;
 		this.messageID = messageID;
-		new GetCode(imageQuantity).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
+		new GetCode(imageQuantity).executeOnExecutor(executor, url);
 	}
 
 	/** Get html code */
