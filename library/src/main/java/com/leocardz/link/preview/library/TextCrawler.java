@@ -46,12 +46,6 @@ public class TextCrawler {
     public void makePreview(LinkPreviewCallback callback, final String url) {
         this.callback = callback;
         new GetCode(ALL).executeOnExecutor(executor, url);
-        /*executorService.submit(new Runnable() {
-            @Override
-            public void run() {
-                GetCodeExecutor(1, url);
-            }
-        });*/
     }
 
     public void makePreview(LinkPreviewCallback callback, String url,
@@ -72,7 +66,7 @@ public class TextCrawler {
         this.callback = callback;
         mHolder = holder;
         this.messageID = messageID;
-        executorService.submit(new Runnable() {
+        executorService.execute(new Runnable() {
             @Override
             public void run() {
                 GetCodeExecutor(imageQuantity, url);
@@ -578,4 +572,7 @@ public class TextCrawler {
                 .replace("\r", " ").trim();
     }
 
+    public static void clearAllTask(){
+        executorService.shutdownNow();
+    }
 }
