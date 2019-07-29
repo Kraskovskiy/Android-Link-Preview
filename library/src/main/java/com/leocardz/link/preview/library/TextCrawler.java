@@ -32,7 +32,7 @@ public class TextCrawler {
     public static final int TIMEOUT = 7000;
     public static final Executor executor = AsyncTask.SERIAL_EXECUTOR;
     public static ExecutorService executorService = Executors.newSingleThreadExecutor();
-    public static List<String> urlsTask = new ArrayList<>();
+    public static List<String> messageIds = new ArrayList<>();
 
     private final String HTTP_PROTOCOL = "http://";
     private final String HTTPS_PROTOCOL = "https://";
@@ -67,8 +67,11 @@ public class TextCrawler {
         this.callback = callback;
         mHolder = holder;
         this.messageID = messageID;
+
         if (executorService.isShutdown()) executorService = Executors.newSingleThreadExecutor();
-        if (urlsTask.contains(url)) return;
+        if (messageIds.contains(messageID)) return;
+
+        messageIds.add(messageID);
         executorService.execute(new Runnable() {
             @Override
             public void run() {
@@ -219,7 +222,6 @@ public class TextCrawler {
     public void GetCodeExecutor(int imageQuantity, String params) {
         SourceContent sourceContent = new SourceContent();
         ArrayList<String> urls;
-        urlsTask.add(params);
 
         // Don't forget the http:// or https://
         urls = SearchUrls.matches(params);
@@ -577,7 +579,7 @@ public class TextCrawler {
     }
 
     public static void clearAllTask() {
-        urlsTask.clear();
+        messageIds.clear();
         executorService.shutdownNow();
     }
 }
