@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -524,20 +525,15 @@ public class TextCrawler {
             return "";
 
         URLConnection urlConn = connectURL(shortURL);
+
+        if (urlConn == null) return shortURL;
+
+        urlConn.setConnectTimeout(TIMEOUT);
         urlConn.getHeaderFields();
 
         String finalResult = urlConn.getURL().toString();
 
-        urlConn = connectURL(finalResult);
-        urlConn.getHeaderFields();
-
-        shortURL = urlConn.getURL().toString();
-
-        while (!shortURL.equals(finalResult)) {
-            finalResult = unshortenUrl(finalResult);
-        }
-
-        return finalResult;
+        return TextUtils.isEmpty(finalResult) ? shortURL : finalResult;
     }
 
     /**
