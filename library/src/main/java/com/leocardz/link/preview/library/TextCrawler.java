@@ -31,7 +31,8 @@ public class TextCrawler {
     public static final int NONE = -2;
     public static final int TIMEOUT = 7000;
     public static final Executor executor = AsyncTask.SERIAL_EXECUTOR;
-    public static final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    public static ExecutorService executorService = Executors.newSingleThreadExecutor();
+    public static List<String> urlsTask = new ArrayList<>();
 
     private final String HTTP_PROTOCOL = "http://";
     private final String HTTPS_PROTOCOL = "https://";
@@ -62,10 +63,12 @@ public class TextCrawler {
     }
 
     public void makePreview(LinkPreviewCallback callback, RecyclerView.ViewHolder holder, String messageID, final String url,
-                                 final int imageQuantity) {
+                            final int imageQuantity) {
         this.callback = callback;
         mHolder = holder;
         this.messageID = messageID;
+        if (executorService.isShutdown()) executorService = Executors.newSingleThreadExecutor();
+        if (urlsTask.contains(url)) return;
         executorService.execute(new Runnable() {
             @Override
             public void run() {
@@ -216,6 +219,7 @@ public class TextCrawler {
     public void GetCodeExecutor(int imageQuantity, String params) {
         SourceContent sourceContent = new SourceContent();
         ArrayList<String> urls;
+        urlsTask.add(params);
 
         // Don't forget the http:// or https://
         urls = SearchUrls.matches(params);
@@ -572,7 +576,8 @@ public class TextCrawler {
                 .replace("\r", " ").trim();
     }
 
-    public static void clearAllTask(){
+    public static void clearAllTask() {
+        urlsTask.clear();
         executorService.shutdownNow();
     }
 }
