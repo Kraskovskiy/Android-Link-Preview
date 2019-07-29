@@ -32,7 +32,7 @@ public class TextCrawler {
     public static final int NONE = -2;
     public static final int TIMEOUT = 7000;
     public static final Executor executor = AsyncTask.SERIAL_EXECUTOR;
-    public static ExecutorService executorService = Executors.newSingleThreadExecutor();
+    public static ExecutorService executorService = Executors.newScheduledThreadPool(2);
     public static List<String> messageIds = new ArrayList<>();
 
     private final String HTTP_PROTOCOL = "http://";
@@ -69,7 +69,6 @@ public class TextCrawler {
         mHolder = holder;
         this.messageID = messageID;
 
-        if (executorService.isShutdown()) executorService = Executors.newSingleThreadExecutor();
         if (messageIds.contains(messageID)) return;
 
         messageIds.add(messageID);
@@ -576,6 +575,5 @@ public class TextCrawler {
 
     public static void clearAllTask() {
         messageIds.clear();
-        executorService.shutdownNow();
     }
 }
