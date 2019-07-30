@@ -33,7 +33,6 @@ public class TextCrawler {
     public static final int TIMEOUT = 7000;
     public static final Executor executor = AsyncTask.SERIAL_EXECUTOR;
     public static ExecutorService executorService = Executors.newScheduledThreadPool(2);
-    public static List<String> messageIds = new ArrayList<>();
 
     private final String HTTP_PROTOCOL = "http://";
     private final String HTTPS_PROTOCOL = "https://";
@@ -69,9 +68,6 @@ public class TextCrawler {
         mHolder = holder;
         this.messageID = messageID;
 
-        if (messageIds.contains(messageID)) return;
-
-        messageIds.add(messageID);
         executorService.execute(new Runnable() {
             @Override
             public void run() {
@@ -571,9 +567,5 @@ public class TextCrawler {
     public static String extendedTrim(String content) {
         return content.replaceAll("\\s+", " ").replace("\n", " ")
                 .replace("\r", " ").trim();
-    }
-
-    public static void clearAllTask() {
-        messageIds.clear();
     }
 }
